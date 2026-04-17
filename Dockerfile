@@ -14,7 +14,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
-# 4. Production (small image 🚀)
+# 4. Production (small image 🚀) #checking
 FROM node:20-alpine AS runner
 WORKDIR /app
 
