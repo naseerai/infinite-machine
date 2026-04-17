@@ -2,8 +2,7 @@ name: Deploy
 
 on:
 push:
-branches:
-- main
+branches: ["main"]
 
 jobs:
 deploy:
@@ -22,22 +21,14 @@ steps:
         APP_DIR=/root/projects/infinite-machine
         REPO_URL=https://github.com/naseerai/infinite-machine.git
 
-        echo "Checking repo..."
-
         if [ ! -d "$APP_DIR/.git" ]; then
-          echo "Cloning repo..."
           git clone $REPO_URL $APP_DIR
         else
-          echo "Pulling latest code..."
           cd $APP_DIR
           git reset --hard
           git pull origin main
         fi
 
         cd $APP_DIR
-
-        echo "Deploying with Docker..."
         docker compose up -d --build --remove-orphans
-
-        echo "Done!"
 ```
