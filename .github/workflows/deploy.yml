@@ -1,4 +1,4 @@
-name: Deploy (Zero/Minimal Downtime)
+name: Deploy
 
 on:
 push:
@@ -11,7 +11,7 @@ runs-on: ubuntu-latest
 
 ```
 steps:
-  - name: Deploy to Server via SSH
+  - name: SSH Deploy
     uses: appleboy/ssh-action@v1.0.3
     with:
       host: ${{ secrets.SERVER_IP }}
@@ -23,13 +23,13 @@ steps:
         APP_DIR=/root/projects/infinite-machine
         REPO_URL=https://github.com/naseerai/infinite-machine.git
 
-        echo "📁 Checking repository..."
+        echo "Checking repo..."
 
         if [ ! -d "$APP_DIR/.git" ]; then
-          echo "📥 Cloning repository..."
+          echo "Cloning repo..."
           git clone $REPO_URL $APP_DIR
         else
-          echo "🔄 Pulling latest code..."
+          echo "Pulling latest code..."
           cd $APP_DIR
           git reset --hard
           git pull origin main
@@ -37,14 +37,8 @@ steps:
 
         cd $APP_DIR
 
-        echo "🧹 Cleaning old unused images..."
-        docker image prune -f || true
-
-        echo "🔨 Building & updating containers (no downtime)..."
+        echo "Building & restarting container..."
         docker compose up -d --build --remove-orphans
 
-        echo "🧼 Optional: remove old image of this app"
-        docker rmi infinite-machine:latest || true
-
-        echo "✅ Deployment completed successfully!"
+        echo "Done!"
 ```
