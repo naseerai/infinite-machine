@@ -19,7 +19,6 @@ steps:
       key: ${{ secrets.SERVER_SSH_KEY }}
       script: |
         set -e
-
         APP_DIR=/root/projects/infinite-machine
         REPO_URL=https://github.com/naseerai/infinite-machine.git
 
@@ -37,7 +36,7 @@ steps:
 
         cd $APP_DIR
 
-        echo "Building & restarting container..."
+        echo "Deploying with Docker..."
         docker compose up -d --build --remove-orphans
 
         echo "Done!"
