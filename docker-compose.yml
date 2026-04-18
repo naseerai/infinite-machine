@@ -1,8 +1,6 @@
-version: "3.8"
-
 services:
   nextjs-app:
-    build: .
+    image: your-dockerhub/infinite-machine:latest
     container_name: infinite-machine
     ports:
       - "3001:3000"

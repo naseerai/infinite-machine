@@ -5,7 +5,7 @@ FROM node:20-alpine AS base
 FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci
+RUN npm ci --omit=dev
 
 # 3. Build
 FROM base AS builder
@@ -14,13 +14,13 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
-# 4. Production (small image 🚀) #checking
+# 4. Production
 FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Copy standalone output
+# Only copy required files
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
