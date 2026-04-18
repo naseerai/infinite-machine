@@ -4,13 +4,25 @@ import Link from 'next/link'
 
 export default function Navbar() {
   return (
-    <nav className="absolute top-[32px] right-8 z-50">
+    /* top-[13vw] keeps the menu perfectly aligned to the bottom of the Title on all screens */
+    <nav className="absolute top-[13.5vw] right-14 z-50">
       <div className="flex items-center gap-6">
         {['P1', 'Olto', 'About', 'Shop', 'Test Ride'].map((item) => (
           <Link
             key={item}
             href="#"
-            className="text-[13px] font-medium text-white/80 hover:text-white transition-colors tracking-wide"
+            className="
+              text-[16.3px] 
+              font-[400] 
+              text-white 
+              hover:opacity-60 
+              transition-opacity 
+              tracking-tight
+            "
+            style={{ 
+              fontFamily: '"Helvetica Now Display", "Helvetica", sans-serif',
+              verticalAlign: 'middle' 
+            }}
           >
             {item}
           </Link>
